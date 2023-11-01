@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "See_Answer_Comment";
+}
+
+<br />
+<br />
+<div class="jumbotron">
+    <h2 align="center">Comments:</h2>
+    <hr />
+
+    @{
+        var answers = Model;
+    }
+    @using (Html.BeginForm("SubmitAnswerComment", "Comment", FormMethod.Post, new { id = "frmAComment" }))
+    {
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="hidden" id="Answer_Id" name="AId" />
+                <textarea class="form-control" id="Comment" name="Comment" placeholder="Add your Comment"></textarea>
+                <p id="err-message" style="display: none; color: red;">Please fill in the Comment First.</p>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary submit-Acomment">Add Comment</button>
+    }
+
+
+
+    @if (answers.Answer_Comment.Count == 0)
+    {
+        <br /> <br /> <br /> <br /> <br /><br /><h1 align="center" style="color:red "> No Comment Yet On This Answer..  </h1>
+                                                <input type="hidden" value="@Model.AId" class="Answer_Id" />
+    }
+    else
+    {
+        int count = 1;
+        foreach (var item in answers.Answer_Comment)
+        {
+            <b>Comment:  @count:</b> <br />@item.Comment <br />
+            <input type="hidden" value="@item.AnswerId" class="Answer_Id" />
+            <hr />
+            count++;
+        }
+    }
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function (e) {
+        var AId = $(".Answer_Id").val();
+        $("#Answer_Id").val(AId);
+        console.log($("#Answer_Id").val());
+
+    });
+    $(document).on("click", ".submit-Acomment", function (e) {
+        e.preventDefault();
+
+        var comment = $("#Comment").val();
+        if (comment.trim() === '') {
+            $("#err-message").show();
+            return;
+        }
+
+        var formData = new FormData($("#frmAComment")[0]);
+        console.log(formData);
+
+        $.ajax({
+            type: "POST",
+            url: "/Comment/SubmitAnswerComment",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data,a,b) {
+                console.log(data,a,b);
+                alert("Data Saved");
+               // location.reload();
+            },
+            error: function () {
+                alert("Data cannot be saved");
+            }
+        });
+    });
+</script>

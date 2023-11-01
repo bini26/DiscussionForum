@@ -1,0 +1,130 @@
+﻿@using System.Web.Mvc
+
+@{ ViewBag.Title = "AnswerView"; }
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+@foreach (var item in Model)
+{
+    <div class="post-container">
+        <div class="post-row">
+            <div class="user-profile">
+                <div>
+                    <input type="hidden" value="@item.QId" id="QID" />
+                    <span>@item.AskedDate</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="post-content">
+
+            <div class="post-header">
+                <a class="btn btn-default delete-button" data-question-id="@item.QId" aria-hidden="true"><i class="fa-solid fa-xmark fa-lg"></i></a>
+            </div>
+            <p class="post-text"> @item.Title</p>
+            <p class="post-text"> @item.Question</p>
+
+
+            <div class="activity-icons">
+                <a class="btn btn-default writeQuestion" data-toggle="modal" data-question-id="@item.QId" data-question="@item.Question">
+                    <span>
+                        <i class="fa-sharp fa-regular fa-pen-to-square fa-lg"></i>
+                    </span>WriteAnswer
+                </a>
+
+            </div>
+
+        </div>
+        </div>
+}
+
+<div class="modal fade" tabindex="-1" id="mymodal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            @using (Html.BeginForm("SubmitAnswer", "Answer", FormMethod.Post, new { id = "frmAnswer" }))
+            {
+
+                <div class="modal-header">
+                    <h5 class="modal-title">  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" id="questionId" name="QId" />
+                    <input type="hidden" id="question" name="Question" />
+                    <textarea placeholder="Write your Answer" id="Answer" name="Answer"></textarea>
+                    <p id="error-message" style="display: none; color: red;">Please fill in the answer or click Close.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary submit-answer">Submit Answer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>}
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (e) {
+        $(document).on("click", ".writeQuestion", function (e) {
+            var questionId = $(this).attr("data-question-id");
+            var question = $(this).attr("data-question");
+            $("#questionId").val(questionId);
+            $("#question").val(question);
+            $(".modal-title").text(question);
+            $("#mymodal").modal("show");
+        });
+        $('.delete-button').click(function () {
+            var questionId = $(this).data('question-id');
+            var questionElement = $(this).closest('.post-container');
+            questionElement.remove();
+        });
+
+        $(document).on("click", ".submit-answer", function (e) {
+            e.preventDefault();
+
+            var answer = $("#Answer").val();
+            //var QId = $("#questionId").val();
+            //var question = $("#question").val();
+
+            if (answer.trim() === '') {
+                $("#error-message").show();
+                return;
+            }
+            //var obj = {
+            //    Answer: answer,
+            //    QId: QId,
+            //    Question:question
+            //}
+
+            //$("#frmAnswer").submit();
+
+
+            var formData = new FormData($("#frmAnswer")[0]);
+            //console.log(JSON.stringify(obj));
+            $.ajax({
+                type: "Post",
+                url: "/Answer/SubmitAnswer",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    alert("Data Saved");
+                    $("#Answer").val('');
+                    $("#mymodal").modal("hide");
+
+                },
+                error: function () {
+                    alert("Data cannot saved");
+                }
+            });
+            //$.post("/Answer/SubmitAnswer", JSON.serialize(formData), function () {
+            //    alert("success");
+            //});
+        });
+    });
+
+
+</script>
+

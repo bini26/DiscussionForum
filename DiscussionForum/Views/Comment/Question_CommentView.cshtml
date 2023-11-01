@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Question_CommentView";
+}
+
+@{
+    var questions = Model; // Retrieve the answers from the query and convert to a list
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<h2>Question_CommentView</h2>
+<br />
+<br />
+<div class="jumbotron">
+    <h2 align="center">Comments:</h2>
+    <hr />
+
+    @using (Html.BeginForm("SubmitQuestionComment", "Comment", FormMethod.Post, new { id = "frmComment" }))
+    {
+
+        <div class="form-group">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-10">
+                <input type="hidden" id="Question_id" name="QId" />
+                <textarea class="form-control" id="Comment" name="Comment" placeholder="Add your Comment"></textarea>
+                <p id="error-message" style="display: none; color: red;">Please fill in the Comment First.</p>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary submit-comment">Add Comment</button>
+    }
+
+    @if (questions.Question_Comment.Count == 0)
+    {
+        <br /> <br /> <br /> <br /> <br /><br />
+        <h1 align="center" style="color:red"> No Comment Yet On This Question. </h1>
+        <input type="hidden" value="@Model.Qid" class="Question_id" />
+    }
+    else
+    {
+        int count = 1;
+        foreach (var item in questions.Question_Comment)
+        {
+            <br /> <br />
+            <b>Comment @count:</b> <br />@item.Comment <br />
+            var currentId = item.QId;
+            <input type="hidden" value="@item.QId" class="Question_id" />
+            <hr />
+            count++;
+        }
+    }
+</div>
+
+<script>
+    $(document).ready(function (e) {
+        var QId = $(".Question_id").val();
+        $("#Question_id").val(QId);
+
+    });
+    $(document).on("click", ".submit-comment", function (e) {
+        e.preventDefault();
+
+        var comment = $("#Comment").val();
+
+        if (comment.trim() === '') {
+            $("#error-message").show();
+            return;
+        }
+
+        var formData = new FormData($("#frmComment")[0]);
+        console.log(formData);
+
+        $.ajax({
+            type: "POST",
+            url: "/Comment/SubmitQuestionComment",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data, a, b) {
+                console.log(data, a, b);
+                alert("Data Saved");
+               // location.reload();
+            },
+            error: function () {
+                alert("Data cannot be saved");
+            }
+        });
+    });
+</script>
+
+
+
+

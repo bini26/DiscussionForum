@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "MyQuestion";
+}
+
+<h2>MyQuestion</h2>
+
+
+    @{
+        if (Model.Count == 0)
+        {
+            <br />
+            <br />
+            <h1 align="center" style="color:dodgerblue ">There are no question for you yet!!  </h1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+        }
+    }
+
+
+    @foreach (var item in Model)
+    {
+
+        <div class="post-container">
+            <div class="user-profile">
+                <div>
+                    @if (item.User != null)
+                    {
+
+
+                        if (item.Identity == "Public")
+                        {
+                            <p> @item.User.FirstName @item.User.LastName<br /></p>
+                        }
+                        else
+                        {
+                            <p>Anonymous</p>
+                        }
+
+                    }
+
+
+
+
+                    <input type="hidden" value="@item.QId" id="QID" />
+                    <span>AskedDate::&nbsp;@item.AskedDate</span>
+                </div>
+            </div>
+            <div class="post-content">
+                <div class="post-header">
+                    <a href="/Questions/Delete?id=@item.QId" aria-hidden="true"><i class="fa-solid fa-xmark fa-lg"></i></a>
+                    @*<a href="@Url.Action("EditQuestion", "Questions", new { id = item.QId })">Edit</a>*@
+                </div>
+                <p class="post-text">Title::&nbsp;@item.Title</p>
+                <p class="post-text">Question::&nbsp;@item.Question</p>
+                <div class="post-row">
+                    <div class="activity-icons">
+                        <a href="/Comment/Question_CommentView?Qid=@item.QId" class="btn btn-default"><i class="fa-regular fa-comment fa-lg"></i> <strong>Comment</strong></a>
+                    </div>
+                    <div class="post-profile-icons">
+                        <a href="/Answer/See_Other_Answers?id=@item.QId" class="btn btn-default"><i class="fa-solid fa-eye"></i> <strong>View Answers</strong></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+

@@ -1,0 +1,54 @@
+﻿@model DiscussionForum.Models.Login
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!-- login form -->
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-section" }))
+{
+    @Html.AntiForgeryToken()
+    <section class="w3l-login">
+        <div class="overlay">
+            <div class="wrapper">
+
+                <div class="form-section">
+                    <h3>Login</h3>
+                    <h6>To continue with Us</h6>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-input">
+
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @placeholder = "Enter Your Email", @class = "form-control" } })
+
+                    </div>
+
+                    <div class="form-input">
+
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = "  Enter Your Password", @class = "form-control", @id = "passw" } })
+
+                     
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary theme-button mt-4" id="loginButton">Log in</button>
+                    <div class="new-signup">
+                        <a href="#reload" class="signuplink">Forgot username or password?</a>
+                    </div>
+                    <p class="signup">Don’t have account yet? <a href="@Url.Action("Signup", "Account")" class="signuplink">SignUp</a></p>
+                  
+
+
+                </div>
+            </div>
+        </div>
+        <div id='stars'></div>
+        <div id='stars2'></div>
+        <div id='stars3'></div>
+
+        <!-- copyright -->
+        <!-- //copyright -->
+    </section>
+}
+
+

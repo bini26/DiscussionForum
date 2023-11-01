@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+
+@Html.AntiForgeryToken()
+
+@foreach (var item in Model.Include("User"))
+{
+
+    <div class="post-container">
+        <div class="user-profile">
+            <div>
+                    @if (item.User != null)
+                    {
+
+
+                           if (item.Identity == "Public")
+                           {
+                       <p> @item.User.FirstName @item.User.LastName<br /></p>
+                               }
+                    else
+                    {
+                        <p>Anonymous</p>
+                    }
+
+                           }    
+                
+                
+
+
+                <input type="hidden" value="@item.QId" id="QID" />
+                <span>AskedDate::&nbsp;@item.AskedDate</span>
+            </div>
+        </div>
+        <div class="post-content">
+            <div class="post-header">
+                <a class="btn btn-default delete-button" data-question-id="@item.QId" aria-hidden="true"><i class="fa-solid fa-xmark fa-lg"></i></a>
+            </div>
+            <p class="post-text">Title::&nbsp;@item.Title</p>
+            <p class="post-text">Question::&nbsp;@item.Question</p>
+            <div class="post-row">
+                <div class="activity-icons">
+                    <a href="/Comment/Question_CommentView?Qid=@item.QId" class="btn btn-default"><i class="fa-regular fa-comment fa-lg"></i> <strong>Comment</strong></a>
+                </div>
+                <div class="post-profile-icons">
+                    <a href="/Answer/See_Other_Answers?id=@item.QId" class="btn btn-default"><i class="fa-solid fa-eye"></i> <strong>View Answers</strong></a>
+                </div>
+            </div>
+        </div>
+    </div>
+                }
+
+<script>
+    $(document).ready(function () {
+        $('.delete-button').click(function () {
+            var questionId = $(this).data('question-id');
+            var questionElement = $(this).closest('.post-container');
+            questionElement.remove();
+        });
+    });
+
+    
+</script>
+
+
+
+

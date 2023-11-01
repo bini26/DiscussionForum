@@ -1,0 +1,151 @@
+﻿
+@using System.Security.Claims;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DiscussionForum Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/css/style.css">
+
+</head>
+<body class="sidebar-light">
+    <div class="container-scroller">
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row navbar-dark">
+            <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
+                <ul class="navbar-nav mr-lg-2 d-none d-lg-flex">
+                    <li class="nav-item nav-toggler-item">
+                        <button class="navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                            <span class="fa fa-bars"></span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("DiscussionForum", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                </ul>
+  
+            <ul class="navbar-nav navbar-nav-right">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item nav-profile dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                            <span class="profile-initial">@User.Identity.Name</span><i class="fa-solid fa-caret-down"></i>
+
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="@Url.Action("Logout", "Admin")" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+
+
+                <li class="nav-item nav-toggler-item-right d-lg-none">
+                    <button class="navbar-toggler align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                </li>
+            </ul>
+                </div>
+        </nav>
+
+ </div>
+        
+            
+
+            <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+       
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Index">
+                        <i class="fa-solid fa-gauge "></i>
+                        <span class="menu-title ">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/UserModels/Index">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="menu-title">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/QuestionModels/Index">
+                        <i class="fa-solid fa-question"></i>
+                        <span class="menu-title">Questions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/AnswerModels/Index">
+                        <i class="fa-solid fa-reply"></i>
+                        <span class="menu-title">Answers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ACommentModels/Index">
+                        <i class="fa-solid fa-comment"></i>
+                        <span class="menu-title">AnswerComment</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/QCommentModels/Index">
+                        <i class="fa-solid fa-comment"></i>
+                        <span class="menu-title">QuestionComment</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/VoteModels/Index">
+                        <i class="fa-solid fa-thumbs-up"></i><i class="fa-solid fa-thumbs-down"></i>
+                        <span class="menu-title">Votes</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/AdminModels/Index">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="menu-title">Admin</span>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </nav>
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+            <script src="~/Scripts/vendor.bundle.base.js"></script>
+            <script src="~/Scripts/jquery.dataTables.js"></script>
+            <script src="~/Scripts/dataTables.bootstrap4.js"></script>
+            <script src="~/Scripts/Chart.min.js"></script>
+            <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+            <script src="~/Scripts/off-canvas.js"></script>
+            <script src="~/Scripts/hoverable-collapse.js"></script>
+            <script src="~/Scripts/template.js"></script>
+            <script src="~/Scripts/settings.js"></script>
+            <script src="~/Scripts/todolist.js"></script>
+            <script src="~/Scripts/data-table.js"></script>
+    </body>
+</html>
+

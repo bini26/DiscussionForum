@@ -1,0 +1,103 @@
+﻿@model DiscussionForum.Models.UserModel
+
+@{
+    ViewBag.Title = "Signup";
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@using (Html.BeginForm( "Signup","Account",FormMethod.Post ,new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <section class="w3l-login">
+        <div class="overlay">
+            <div class="wrapper">
+
+                <div class="form-section ">
+
+                    <div class="form-horizontal">
+                        <h4>SignUp</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-10">@ViewBag.Message</div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <div class="ii">
+                                <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @placeholder = " Enter your First Name", @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="ii">
+                                <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @placeholder = " Enter your Last Name", @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="ii">
+                                <i class="fal fa-envelope fa-2x"></i>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @placeholder = " Enter your Email", @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="ii">
+                                <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+                            </div>
+
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = " Enter your Password", @class = "form-control", @id = "password" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <div class="ii">
+                                <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @placeholder = " Confirm your Password", @class = "form-control", @id = "cpassword" } })
+
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                          
+                        </div>
+
+                           
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="SignUp" class="btn btn-primary theme-button mt-4" />
+                            </div>
+                        </div>
+                        <div>
+                            <p class="signup">Already have an Account? <a href="@Url.Action("Login", "Account")" class="signuplink">Login</a></p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

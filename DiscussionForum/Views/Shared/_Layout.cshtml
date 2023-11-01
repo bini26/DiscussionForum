@@ -1,0 +1,97 @@
+﻿
+@using System.Security.Claims;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+    
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Discussion Forum", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li> @Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Ask Question?", "Question", "Questions")</li>
+                    <li>@Html.ActionLink("Answer", "AnswerView", "Home")</li>
+                    @*@if (User.Identity.IsAuthenticated)
+        {
+            <li><a>@User.Identity.Name</a></li>
+            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+        }*@@if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                @if (!string.IsNullOrEmpty(User.Identity.Name))
+                                {
+
+                                    <span class="profile-initial">@User.Identity.Name</span><i class="fa-solid fa-caret-down"></i>
+                                }
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+                    else
+                    {
+
+                        <li>@Html.ActionLink("Signup", "Signup", "Account")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    }
+                <li>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                    {
+                        <input class=" mr-sm-2 " type="search" placeholder="Search" name="search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    }
+                </li>
+                <li>@Html.ActionLink("MyQuestions", "MyQuestion", "Questions")</li>
+
+                </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+
+        
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+       
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+
+

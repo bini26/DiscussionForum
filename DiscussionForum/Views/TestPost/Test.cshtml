@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+@using (Html.BeginForm("Test", "TestPost", FormMethod.Post, new { id = "frmComment" }))
+{
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <textarea class="form-control" id="Comment" name="Comment" placeholder="Add your Comment"></textarea>
+            <p id="error-message" style="display: none; color: red;">Please fill in the Comment First.</p>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary submit-comment">Add Comment</button>
+}

@@ -1,0 +1,31 @@
+.btn-lg{
+background-color:#000;
+transition: 2s ease;
+}
+#signin:hover {
+background-color:#c7cff1;
+}
+.menu-title:hover{
+    background-color: #c7cff1;
+}
+.menu-icon,
+.mdi {
+    color: #333; /* Change this to your desired dark color */
+}
+
+/* Update the color of the anchor tags in the sidebar to dark */
+.sidebar a {
+    color: #333; /* Change this to your desired dark color */
+}
+
+    /* Update the color of the hover effect for anchor tags in the sidebar to dark */
+    .sidebar a:hover {
+        color: #000; /* Change this to your desired dark hover color */
+    }
+.navbar-nav-right .nav-profile .dropdown-menu {
+    top: 100%;
+    left: 0;
+}
+.active{
+    color:#ffffff;
+}

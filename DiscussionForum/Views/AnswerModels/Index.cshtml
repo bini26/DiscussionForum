@@ -1,0 +1,67 @@
+﻿@model IEnumerable<DiscussionForum.Models.AnswerModel>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    
+    <table class="table">
+        <tr>
+            <th>
+                S.NO #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Question.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnswerDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    @{
+        int i = 1;}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @i.
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnswerDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.AnswerId }) |*@
+                @*@Html.ActionLink("Details", "Details", new { id=item.AnswerId }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id=item.AnswerId }, new { @class = "btn btn-info" })
+            </td>
+        </tr>
+        i++;
+    }
+    
+    </table>
+</body>
+</html>

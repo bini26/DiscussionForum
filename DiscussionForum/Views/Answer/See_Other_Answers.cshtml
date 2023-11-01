@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "See_Other_Answers";
+}
+<br />
+<br />
+<div class="jumbotron">
+   
+    <b>Question:</b> <br />
+    @Model.Question.Question <br />
+    <div style="margin-left: 800px">
+
+        <br>
+    </div>
+
+    <h2 align="center">Answer:</h2>
+    <hr />
+
+   
+    @if (Model.Answers.Count == 0)
+    {
+        <br /> <br /> <br /> <br /> <br /><br /><h1 align="center" style="color:red "> No Answers Yet On This Question..  </h1>
+    }
+    else
+    {
+        int count = 1;
+        foreach (var item in Model.Answers)
+        {
+            <b>Answer @count:</b> <br />@item.Answer <br />
+            <div style="margin-left:800px">
+                <b>Date:</b> @item.AnswerDate
+                <br>
+            </div>
+            <div class="post-profile-icons">
+                <button class="btn-upvote" data-answer-id="@item.AnswerId">
+                    <i class="fa-solid fa-up-long btn-upvote" data-answer-id="@item.AnswerId"></i>
+
+                </button>
+                <span class="upvote-count">@item.upvoteCount</span>
+
+                <!-- Downvote button -->
+                <button class="btn-downvote" data-answer-id="@item.AnswerId">
+                    <i class="fa-solid fa-down-long"></i>
+                </button>
+                <span class="downvote-count">@item.downvoteCount</span>
+            </div>
+
+
+            <div class="post-profile-icons" style="margin-left:500px">
+                <a href="/Comment/See_Answer_Comment?id=@item.AnswerId" class="btn btn-default"><i class="fa-solid fa-eye"></i> <strong>Comment</strong></a>
+            </div>
+            <hr />
+            count++;
+        }
+    }
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $(".btn-upvote").click(function () {
+                $(this).toggleClass("active");
+                var answerId = $(this).data("answer-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Vote/Upvote",
+                    data: { answerId: answerId },
+                    success: function (data) {
+                        if (data.success) {
+                            // Update the vote counts on the page
+                            $(".btn-upvote[data-answer-id='" + answerId + "']").next(".upvote-count").text(data.upvoteCount);
+                            $(".btn-downvote[data-answer-id='" + answerId + "']").next(".downvote-count").text(data.downvoteCount);
+                        } else {
+                            alert("Login is required");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while processing your vote.");
+                    }
+                });
+            });
+
+            $(".btn-downvote").click(function () {
+                $(this).toggleClass("active");
+                var answerId = $(this).data("answer-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Vote/Downvote",
+                    data: { answerId: answerId },
+                    success: function (data) {
+                        if (data.success) {
+                            // Update the vote counts on the page
+                            $(".btn-upvote[data-answer-id='" + answerId + "']").next(".upvote-count").text(data.upvoteCount);
+                            $(".btn-downvote[data-answer-id='" + answerId + "']").next(".downvote-count").text(data.downvoteCount);
+                        } else {
+                            alert("Login is required");
+
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while processing your vote.");
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}

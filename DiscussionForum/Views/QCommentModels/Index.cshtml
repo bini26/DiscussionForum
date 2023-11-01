@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DiscussionForum.Models.QCommentModel>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+    <table class="table">
+        <tr>
+            <th>
+                S.NO #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Question.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    @{ 
+        int i = 1;
+    }
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @i.
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.QCommentId }) |*@
+                @*@Html.ActionLink("Details", "Details", new { id=item.QCommentId }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id=item.QCommentId}, new { @class = "btn btn-info" })
+            </td>
+        </tr>
+        i++;
+    }
+    
+    </table>
+</body>
+</html>

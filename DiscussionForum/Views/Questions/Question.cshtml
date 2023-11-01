@@ -1,0 +1,91 @@
+﻿
+@model DiscussionForum.Models.QuestionModel
+
+    @{
+        ViewBag.Title = "Question";
+    }
+
+    <h2>Question</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-horizontal">
+
+            <div class="row" style="margin: 0 auto; max-width: 50%;">
+                @*<div class="post-container">
+                    <div class="user-profile">
+                        <div>
+
+
+
+                        </div>
+                    </div>
+                </div>*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Identity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+
+                        @Html.DropDownListFor(model => model.Identity, new SelectList(ViewBag.list), htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Identity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control text" ,id="title" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Question, new { @class = "form-control", placeholder = "Ask your Question" ,id="question"})
+                        @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit Question" class="btn btn-primary theme-button mt-4" />
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+<script>
+
+    $(document).on("click", ".question", function (e) {
+        e.preventDefault();
+        console.log("ram");
+        var title = $("#title").val();
+        var question = $("#question").val();
+
+        if (title.trim() === '') {
+            $("#err-message").show();
+            return;
+        }
+        else if (question.trim() === '') {
+            $("#err-message").show();
+            return;
+        }
+        else {
+            $("#err-message").hide();
+            return;
+        }
+    });
+
+
+</script>
